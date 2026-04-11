@@ -128,6 +128,14 @@ int hb_compMainExt( int argc, const char * const argv[],
             break;
          }
       }
+      /*
+       * Prevent pszFileName resulting in an invalid (empty?) filename, which
+       * breaks code relying on previous behavior
+       */
+      if( ! pszFileName || pszFileName[0] == '\0' )
+      {
+         pszFileName = "{SOURCE}";
+      }
       iFileCount++;
       iStatus = hb_compCompile( HB_COMP_PARAM, pszFileName, szSource, iStartLine );
    }
